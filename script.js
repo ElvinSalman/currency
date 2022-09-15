@@ -1,11 +1,18 @@
 'use strict';
 let arr = ['usd', 'eur', 'aud', 'cad', 'chf', 'nzd', 'bgn'],
-    main = document.querySelector('#result');
+    main = document.querySelector('#result'),
+    group1 = document.querySelector('.g1'),
+    group2 = document.querySelector('.g2'),
+    group3 = document.querySelector('.g3'),
+    count1 = 0,
+    count2 = 0,
+    count3 = 0;
+
 
 let obj;
 window.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < arr.length; i++) {
-        if(arr[i]=='usd') continue;
+        if (arr[i] == 'usd') continue;
         let jsonObj = new XMLHttpRequest();
         jsonObj.open('GET', `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd/${arr[i]}.json`, false);
         jsonObj.send();
@@ -15,15 +22,52 @@ window.addEventListener('DOMContentLoaded', () => {
             obj = JSON.parse(jsonObj.responseText);
         }
         // main.innerHTML += `<h1>${obj[`${arr[i]}`]}</h1>`;
-        main.innerHTML+=
-        `
-        <div>
-            <h1>1 USD</h1>
-            <h1>=</h1>
-            <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
-        </div>
-        `
+
+        if (obj[arr[i]] < 1) {
+            count1++;
+            group1.innerHTML +=
+                `
+            <div>
+                <h1>1 USD</h1>
+                <h1>=</h1>
+                <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+            </div>
+            `
+        } else if (obj[arr[i]] >= 1 && obj[arr[i]] < 1.5) {
+            count2++;
+            group2.innerHTML +=
+                `
+            <div>
+                <h1>1 USD</h1>
+                <h1>=</h1>
+                <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+            </div>
+            `
+        } else {
+            count3++;
+            group3.innerHTML +=
+                `
+            <div>
+                <h1>1 USD</h1>
+                <h1>=</h1>
+                <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+            </div>
+            `
+        }
+
+
+        // main.innerHTML+=
+        // `
+        // <div>
+        //     <h1>1 USD</h1>
+        //     <h1>=</h1>
+        //     <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+        // </div>
+        // `
     }
+    group1.innerHTML += `<h2>Count: ${count1}</h2>`;
+    group2.innerHTML += `<h2>Count: ${count2}</h2>`;
+    group3.innerHTML += `<h2>Count: ${count3}</h2>`;
 })
 
 let list = document.getElementsByClassName('select-box__option');
@@ -33,7 +77,8 @@ listsBox.onclick = function (event) {
         targetTxt = 'usd';
     for (let i = 0; i < arr.length; i++) {
         if (event.target.innerHTML.toLowerCase() == arr[i]) {
-            main.innerHTML = '';
+            group1.innerHTML = '',group2.innerHTML = '',group3.innerHTML = '',
+            count1=0,count2=0,count3=0;
             targetId = i;
             targetTxt = arr[i]
         }
@@ -41,7 +86,7 @@ listsBox.onclick = function (event) {
     }
 
     for (let i = 0; i < arr.length; i++) {
-        if(arr[i]==targetTxt) continue;
+        if (arr[i] == targetTxt) continue;
         let jsonObj = new XMLHttpRequest();
         jsonObj.open('GET', `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${targetTxt}/${arr[i]}.json`, false);
         jsonObj.send();
@@ -51,13 +96,47 @@ listsBox.onclick = function (event) {
             obj = JSON.parse(jsonObj.responseText);
         }
         // main.innerHTML += `<h1>${obj[`${arr[i]}`]}</h1>`;
-        main.innerHTML+=
-        `
-        <div>
-            <h1>1 ${targetTxt.toLocaleUpperCase()}</h1>
-            <h1>=</h1>
-            <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
-        </div>
-        `
+        if (obj[arr[i]] < 1) {
+            count1++;
+            group1.innerHTML +=
+                `
+            <div>
+                <h1>1 ${targetTxt.toLocaleUpperCase()}</h1>
+                <h1>=</h1>
+                <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+            </div>
+            `
+        } else if (obj[arr[i]] >= 1 && obj[arr[i]] < 1.5) {
+            count2++;
+            group2.innerHTML +=
+                `
+            <div>
+                <h1>1 ${targetTxt.toLocaleUpperCase()}</h1>
+                <h1>=</h1>
+                <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+            </div>
+            `
+        } else {
+            count3++;
+            group3.innerHTML +=
+                `
+            <div>
+                <h1>1 ${targetTxt.toLocaleUpperCase()}</h1>
+                <h1>=</h1>
+                <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+            </div>
+            `
+        }
+        // main.innerHTML+=
+        // `
+        // <div>
+        //     <h1>1 ${targetTxt.toLocaleUpperCase()}</h1>
+        //     <h1>=</h1>
+        //     <h1>${obj[`${arr[i]}`]} ${arr[i].toLocaleUpperCase()}</h1>
+        // </div>
+        // `
     }
+    group1.innerHTML += `<h2>Count: ${count1}</h2>`;
+    group2.innerHTML += `<h2>Count: ${count2}</h2>`;
+    group3.innerHTML += `<h2>Count: ${count3}</h2>`;
 }

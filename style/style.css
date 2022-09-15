@@ -124,9 +124,22 @@ body {
 
 #result>div{
     margin: 20px 0;
-    display: flex;
-    justify-content: space-around;
+   
 }
-#result>div>h1:nth-child(2){
-    text-align: right;
+.g div{
+  display: flex;
+  justify-content: space-around;
+}
+.g div h1{
+  text-align: center;
+}
+.g div h1:nth-child(3){
+  width: 20%;
+}
+.g div h1:nth-child(2){
+  width: 10%;
+  text-align: right;
+}
+.g h2{
+  color: red;
 }
